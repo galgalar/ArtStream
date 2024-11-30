@@ -1,0 +1,72 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.HashMap;
+
+public class RegArtistFunc extends JFrame implements ActionListener {
+    private JTextField usernameField = new JTextField();
+    private JPasswordField passwordField = new JPasswordField();
+    private JButton registerButton = new JButton("Register");
+    private JButton goBack = new JButton("Go Back");
+    protected static HashMap<String, String> artistDatabase = new HashMap<>(); // Simulated database
+
+    public RegArtistFunc() {
+        setTitle("Register Artist");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setBounds(50, 50, 100, 25);
+        usernameField.setBounds(150, 50, 200, 25);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(50, 100, 100, 25);
+        passwordField.setBounds(150, 100, 200, 25);
+
+        registerButton.setBounds(50, 150, 120, 30);
+        goBack.setBounds(200, 150, 120, 30);
+
+        add(usernameLabel);
+        add(usernameField);
+        add(passwordLabel);
+        add(passwordField);
+        add(registerButton);
+        add(goBack);
+
+        registerButton.addActionListener(this);
+        goBack.addActionListener(this);
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == registerButton) {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            if (!username.isEmpty() && !password.isEmpty()) {
+                if (!artistDatabase.containsKey(username)) {
+                    artistDatabase.put(username, password);
+                    JOptionPane.showMessageDialog(this, "Account created successfully!");
+                    navigateToSignin();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username already exists.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Please fill all fields.");
+            }
+        } else if (e.getSource() == goBack) {
+            navigateToSetup();
+        }
+    }
+
+    // Methods to be overridden by subclasses
+    protected void navigateToSignin() {
+        // Placeholder for navigation logic
+    }
+
+    protected void navigateToSetup() {
+        // Placeholder for navigation logic
+    }
+}
